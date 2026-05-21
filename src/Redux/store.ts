@@ -1,10 +1,12 @@
 import {useDispatch, useSelector} from "react-redux";
 import { configureStore } from '@reduxjs/toolkit'
 import {TopicModalSlice} from "./topicModalSlice.ts";
+import {UpdateSlice} from "./updateSlice.tsx";
 
 export const store = configureStore({
     reducer: {
         show: TopicModalSlice.reducer,
+        updateState: UpdateSlice.reducer,
     },
 })
 
