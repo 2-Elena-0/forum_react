@@ -7,6 +7,8 @@ import {Post} from "./Components/posts/Post.tsx";
 import {Profile} from "./Components/Profile/Profile.tsx";
 import {Users} from "./Components/Users/Users.tsx";
 import {CreatePost} from "./Components/posts/CreatePost/CreatePost.tsx";
+import {SignIn} from "./Components/Account/SignIn.tsx";
+import {SignUp} from "./Components/Account/SignUp.tsx";
 
 function App() {
     return (
@@ -18,6 +20,8 @@ function App() {
                 <Route path="/profile" element={<Profile />}/>
                 <Route path="/users" element={<Users />}/>
                 <Route path="/create" element={<CreatePost />}/>
+                <Route path="/sign-in" element={<SignIn />}/>
+                <Route path="/sign-up" element={<SignUp />}/>
             </Routes>
         </>
     )

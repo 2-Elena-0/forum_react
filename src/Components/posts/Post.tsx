@@ -1,71 +1,48 @@
-import {Button, Card, Carousel, Container, Form, Image} from "react-bootstrap";
+import {Container} from "react-bootstrap";
 import {HeartFill, StarFill} from "react-bootstrap-icons";
-import {useState} from "react";
+import {useEffect, useState} from "react";
+import {useSearchParams} from "react-router";
+import axios from "axios";
+import {Comments} from "../Comments/Comments.tsx";
+import {MyCarousel} from "../Components/Carousel.tsx";
 
 export const Post = () => {
-    const [index, setIndex] = useState(0);
+    const [searchParams] = useSearchParams();
+    const [postName, setPostName] = useState<string>("");
+    const [postBody, setPostBody] = useState<string>("");
+    const [likes, setLikes] = useState<number>(0);
+    const [favorite, setFavorite] = useState<number>(0);
+    const [images, setImages] = useState<string[]>([]);
 
-    const handleSelect = (selectedIndex : number) => {
-        setIndex(selectedIndex);
-    };
+
+    useEffect(() => {
+        const query = searchParams.get("post");
+        axios.get(`http://localhost:5152/api/Post/byUid/${query}`).then(res => {
+            setPostName(res.data.name);
+            setPostBody(res.data.body);
+            setLikes(res.data.likes);
+            setFavorite(res.data.favorites);
+            setImages(res.data.images);
+        })
+    }, [])
+
+
     return (
         <Container>
-            <Carousel activeIndex={index} onSelect={handleSelect}>
-                <Carousel.Item>
-                    <Image className="w-100 img-fluid"
-                         src="https://richard-tea.com/upload/delight.webpconverter/upload/iblock/0fd/0g01n4rglqk27pt65dlgzdfa6df5o7yj/shutterstock_2139939275.jpg.webp?173437319867942"/>
-                </Carousel.Item>
-                <Carousel.Item>
-                    <Image className="w-100 img-fluid"
-                         src="https://www.tea-coffee.ru/teaimages/postimg/images/zavarochnyi%20_chajnik.jpg"/>
-                </Carousel.Item>
-                <Carousel.Item>
-                    <Image className="w-100 img-fluid"
-                           src="https://therapy.school/upload/weimg_cache/9a8/9a8e6b2ce2fb87507c57f66728aef9bb/19.11.jpg"/>
-                </Carousel.Item>
-            </Carousel>
-            <h1 className="text-center">Какое-то название поста</h1>
+            {images.length > 0 && (<MyCarousel images={images} />)}
+
+            <h1 className="text-center">{postName}</h1>
             <div className="text-center">
-                <p>какой-то текст</p>
-                <p>какой-то текст</p>
-                <p>какой-то текст</p>
-                <p>какой-то текст</p>
-                <p>какой-то текст</p>
-                <p>какой-то текст</p>
-                <p>какой-то текст</p>
+                <p>{postBody}</p>
                 <div>
                     <HeartFill color="red" size={25}/>
-                    <small className="ms-1 text-muted">246</small>
+                    <small className="ms-1 text-muted">{likes}</small>
                     <StarFill className="ms-3 mb-1" color="orange" size={25}/>
-                    <small className="ms-1 text-muted">98</small>
+                    <small className="ms-1 text-muted">{favorite}</small>
                 </div>
             </div>
-            <h3 className="m-3 text-center">Комментарии</h3>
-            <Form>
-                <Form.Group className="mb-1" controlId="exampleForm.ControlTextarea1">
-                    <Form.Label>Example textarea</Form.Label>
-                    <Form.Control as="textarea" rows={3}/>
-                </Form.Group>
-                <Button className="mb-3" variant="primary" type="submit">Отправить</Button>
-            </Form>
 
-            {Array.from(Array(10).keys()).map((_, i) => (
-                <Card key={i} border="info"
-                      className="mb-3 d-flex flex-row-reverse display-flex align-items-center justify-content-between">
-                    <div>
-                        <HeartFill color="red" size={25}/>
-                        <small className="ms-1 text-muted">246</small>
-                    </div>
-                    <div className="w-100">
-                        <Card.Body>
-                            <Card.Text>
-                                Всё больше и больше людей переходят с кофе на чай
-                            </Card.Text>
-                        </Card.Body>
-                    </div>
-                    <Image style={{height: "8.5em"}}
-                           src="./avatar/whos-the-baddest-hsr-character-and-why-is-it-serval-v0-z9rnvb32vj2b1.png"/>
-                </Card>
-            ))}
+            <h3 className="m-3 text-center">Комментарии</h3>
+            <Comments/>
         </Container>)
 }
