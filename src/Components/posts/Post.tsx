@@ -1,4 +1,4 @@
-import {Container} from "react-bootstrap";
+import {Button, Container} from "react-bootstrap";
 import {useEffect, useState} from "react";
 import {useNavigate, useSearchParams} from "react-router";
 import axios from "axios";
@@ -20,6 +20,7 @@ export const Post = () => {
 
     const query = searchParams.get("post");
     const navigate = useNavigate();
+    const user = localStorage.getItem("uid");
 
     useEffect(() => {
         if (query) {
@@ -41,6 +42,10 @@ export const Post = () => {
         <Container>
             {query && (
                 <>
+                    {postCreator == user && (
+                        <Button onClick={() => navigate(`/update-post?post=${query}`)} className="mb-3">Редактировать</Button>
+                    )}
+
                     {images.length > 0 && (<MyCarousel images={images}/>)}
 
                     <h1 className="text-center">{postName}</h1>

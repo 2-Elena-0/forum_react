@@ -24,12 +24,15 @@ export const LinkSlice = createSlice({
         }>) => {
             state.value[action.payload.index] = action.payload.val
         },
+        SetLinks: (state, action: PayloadAction<string[]>) => {
+          state.value = action.payload;
+        },
         Clear: (state) => {
             state.value = [""]
         }
     },
 })
 
-export const {AddLink, RemoveLink, ChangeLink, Clear} = LinkSlice.actions
+export const {AddLink, RemoveLink, ChangeLink, SetLinks, Clear} = LinkSlice.actions
 
 export default LinkSlice.reducer

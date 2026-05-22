@@ -13,6 +13,7 @@ import {User} from "./Components/Profile/User.tsx";
 import {NotFound} from "./Components/NotFound/NotFound.tsx";
 import {LikedPosts} from "./Components/posts/LikedPosts.tsx";
 import {FavoritedPosts} from "./Components/posts/FavoritedPosts.tsx";
+import {UpdatePost} from "./Components/posts/CreatePost/UpdatePost.tsx";
 
 function App() {
     return (
@@ -27,6 +28,7 @@ function App() {
                 <Route path="/user" element={<User />}/>
                 <Route path="/users" element={<Users />}/>
                 <Route path="/create" element={<CreatePost />}/>
+                <Route path="/update-post" element={<UpdatePost />}/>
                 <Route path="/sign-in" element={<SignIn />}/>
                 <Route path="/sign-up" element={<SignUp />}/>
                 <Route path="*" element={<NotFound />} />
