@@ -1,4 +1,4 @@
-import {Button, Card, Container} from "react-bootstrap";
+import {Card, Container} from "react-bootstrap";
 import {useEffect, useState} from "react";
 import {useNavigate} from "react-router";
 import axios from "axios";
@@ -6,6 +6,7 @@ import {UserPost} from "../posts/UserPost.tsx";
 import {MyImage} from "../Comments/Image.tsx";
 import {MySpinner} from "../Comments/Spinner.tsx";
 import {UserRefactor} from "../Users/Components/UserRefactor.tsx";
+import {Exit} from "./Components/Exit.tsx";
 
 export const Profile = () => {
     const [name, setName] = useState<string>("");
@@ -61,11 +62,9 @@ export const Profile = () => {
                 </Card.Body>
             </Card>
 
-            <UserRefactor />
+            <UserRefactor name={name} description={description} uid={uid} image={avatar}/>
 
-            <Button variant="danger" onClick={() => navigate("/sign-in")}>
-                Выйти
-            </Button>
+            <Exit />
 
             <h3 className="text-center">Посты пользователя</h3>
             <UserPost creatorUid={uid} />

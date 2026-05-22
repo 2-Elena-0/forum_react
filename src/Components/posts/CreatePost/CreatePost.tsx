@@ -1,111 +1,60 @@
-import {Button, Col, Container, Form, InputGroup, Row} from "react-bootstrap";
-import {useEffect, useState} from "react";
-import axios from "axios";
+import {Button, Container, Form} from "react-bootstrap";
 import {CreateTopicModal} from "./Components/CreateTopicModal.tsx";
-import {useAppDispatch} from "../../../Redux/store.ts";
-import {handleShow} from "../../../Redux/topicModalSlice.ts";
+import {LinksInput} from "./Components/LinksInput.tsx";
+import {useAppDispatch, useAppSelector} from "../../../Redux/store.ts";
+import axios from "axios";
+import {useNavigate} from "react-router";
+import {Clear} from "../../../Redux/LinkSlice.ts";
 
-type topic = {
-    uid: string;
-    title: string;
-    description: string;
-}
 
 export const CreatePost = () => {
-    const [inputs, setInputs] = useState(['']);
-    const [topics, setTopics] = useState(['']);
-    const [topicsTypes, setTopicsTypes] = useState<topic[]>([])
+    const links = useAppSelector(state => state.links.value);
+    const dispatch = useAppDispatch();
 
-    const reducer = useAppDispatch();
+    const navigate = useNavigate();
 
-    useEffect(() => {
-        axios.get("http://localhost:5152/api/Topic").then(res => {
-            setTopicsTypes(res.data);
-        })
-    }, []);
+    const formCheck = async (e: React.SyntheticEvent): Promise<void> => {
 
-    const handleAddTopic = () => {
-        setTopics([...topics, '']);
-    };
+        const user = localStorage.getItem("uid");
 
-    const handleTopicChange = (index: number, value: string) => {
-        const newTopics = [...topics];
-        newTopics[index] = value;
-        setTopics(newTopics);
-    };
+        if (user) {
+            e.preventDefault();
+            const target = e.target as typeof e.target & {
+                title: {value: string },
+                body: { value: string },
+            }
 
-    const handleAddInput = () => {
-        setInputs([...inputs, '']);
-    };
+            console.log(target.title.value, target.body.value);
+            console.log(links);
 
-    const handleRemoveInput = (index: number) => {
-        const x = [...inputs]
-        x.splice(index, 1);
-        setInputs([...x]);
+            const images = [...links].filter(x => x != "");
+            await axios.post("http://localhost:5152/api/Post", {
+                name: target.title.value,
+                body: target.body.value,
+                images: images,
+                userUId: user,
+            }).then((res) => {
+                dispatch(Clear());
+                navigate(`/post?post=${res.data.uid}`);
+            })
+        }
     }
 
-    const handleInputChange = (index: number, value: string) => {
-        const newInputs = [...inputs];
-        newInputs[index] = value;
-        setInputs(newInputs);
-    };
     return (
         <Container>
             <h1 className="text-center">Создать пост</h1>
-            <Form>
-                <Button onClick={handleAddTopic} className="mb-1">Добавить тему</Button>
-                <Row>
-                    {topics.map((topic, index) => (
-                        <Col key={index}>
-                            <Button variant="outline-dark" onClick={() => reducer(handleShow())}>Создать свою</Button>
-                            <Form.Select defaultValue={topic} onChange={(e) => handleTopicChange(index, e.target.value)}
-                                         className="mb-1" aria-label="Default select example">
-                                <option>Выбрать тему</option>
-                                {topicsTypes.map((top, ind) => (
-                                    <option key={ind} value={ind}>{top.title}</option>
-                                ))}
-                            </Form.Select>
-                        </Col>
-                    ))}
-                </Row>
-                <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+            <Form onSubmit={formCheck}>
+                <Form.Group className="mb-3" controlId="title">
                     <Form.Control placeholder="Название поста"/>
                 </Form.Group>
-                <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+                <Form.Group className="mb-3" controlId="body">
                     <Form.Control as="textarea" placeholder="содержание" rows={10}/>
                 </Form.Group>
-                <Form.Group controlId="formFileMultiple" className="mb-3">
-                    <Form.Label>Multiple files input example</Form.Label>
-                    <Form.Control className="mb-1" type="file" multiple/>
-                    {inputs.map((input, index) => (
-                        <Row className="mb-1" key={index}>
-                            <Col>
-                                <InputGroup>
-                                    {index != inputs.length - 1 ? (
-                                        <Button onClick={() => handleRemoveInput(index)} variant="outline-danger"
-                                                id="button-addon1">
-                                            Убрать
-                                        </Button>
-                                    ) : (
-                                        <Button onClick={handleAddInput} variant="outline-success" id="button-addon1">
-                                            Добавить
-                                        </Button>
-                                    )}
 
-                                    <InputGroup.Text>Ссылка {index + 1}</InputGroup.Text>
-                                    <Form.Control
-                                        type="text"
-                                        value={input}
-                                        onChange={(e) => handleInputChange(index, e.target.value)}
-                                        placeholder="Изображение ссылкой"
-                                    />
-                                </InputGroup>
-                            </Col>
-                        </Row>
-                    ))}
-                </Form.Group>
-                <Button variant="primary">Отправить</Button>
+                <LinksInput />
+
+                <Button variant="primary" type="submit">Отправить</Button>
             </Form>
-            <CreateTopicModal />
+            <CreateTopicModal/>
         </Container>)
 }
