@@ -1,5 +1,5 @@
 import {Container} from "react-bootstrap";
-import {UserPost} from "./UserPost.tsx";
+import {UserPost} from "../Components/UserPost.tsx";
 
 export const Posts = () => {
     return (

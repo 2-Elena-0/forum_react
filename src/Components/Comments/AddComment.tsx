@@ -24,6 +24,7 @@ export const AddComment = ({postUid} : {postUid: string}) => {
                 userUId: user
             }).then(() => {
                 reduce(changeValue())
+                navigate(0)
             })
         } else {
             navigate("/login");

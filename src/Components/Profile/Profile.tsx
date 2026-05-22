@@ -1,12 +1,12 @@
-import {Card, Container} from "react-bootstrap";
+import {Container} from "react-bootstrap";
 import {useEffect, useState} from "react";
 import {useNavigate} from "react-router";
 import axios from "axios";
-import {UserPost} from "../posts/UserPost.tsx";
-import {MyImage} from "../Comments/Image.tsx";
+import {UserPost} from "../Components/UserPost.tsx";
 import {MySpinner} from "../Comments/Spinner.tsx";
 import {UserRefactor} from "../Users/Components/UserRefactor.tsx";
 import {Exit} from "./Components/Exit.tsx";
+import {ProfilePart} from "./Components/ProfilePart.tsx";
 
 export const Profile = () => {
     const [name, setName] = useState<string>("");
@@ -29,6 +29,14 @@ export const Profile = () => {
                 setDescription(res.data.description);
                 setFollowers(res.data.followers);
                 setUid(res.data.uid);
+
+                axios.get(`http://localhost:5152/api/User/likePost/${res.data.uid}`)
+                    .then((r) => localStorage.setItem("likePosts", r.data));
+                axios.get(`http://localhost:5152/api/User/favoritePost/${res.data.uid}`)
+                    .then((r) => localStorage.setItem("favoritePosts", r.data));
+
+                console.log(localStorage.getItem("likePosts"));
+
             }).catch(error => {
                 console.log(error);
                 navigate("/sign-in");
@@ -39,35 +47,17 @@ export const Profile = () => {
     }, [])
 
 
-
     return (<Container>
         <h1 className="text-center">Профиль</h1>
-        {name == "" ? (<MySpinner />) : (<>
-            <Card className="border-0">
-                <Card.Body className="d-lg-flex display-lg-flex justify-content-between">
-                    <div>
-                        <div className="me-2 border border-secondary">
-                            <MyImage src={avatar} height={"15em"} width={"15em"} />
-                        </div>
-                        <div className="d-flex display-flex justify-content-between">
-                            <p>{followers} подписчиков</p>
-                            <p>40 подаписок</p>
-                        </div>
-                    </div>
-                    <div className="w-100">
-                        <Card.Title>{name} - <small
-                            className="ms-1 text-muted">{uid}</small></Card.Title>
-                        <Card.Text>{description}</Card.Text>
-                    </div>
-                </Card.Body>
-            </Card>
+        {name == "" ? (<MySpinner/>) : (<>
+            <ProfilePart avatar={avatar} followers={followers} name={name} uid={uid} description={description}/>
 
             <UserRefactor name={name} description={description} uid={uid} image={avatar}/>
 
-            <Exit />
+            <Exit/>
 
             <h3 className="text-center">Посты пользователя</h3>
-            <UserPost creatorUid={uid} />
+            <UserPost creatorUid={uid}/>
         </>)}
 
     </Container>)

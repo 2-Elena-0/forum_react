@@ -36,6 +36,8 @@ const ForumNavbar = () => {
                         </Form>
                         <Nav className="justify-content-end flex-grow-1 pe-3">
                             <Nav.Link as={Link} to="/users">Пользователи</Nav.Link>
+                            <Nav.Link as={Link} to="/liked">Понравившиеся</Nav.Link>
+                            <Nav.Link as={Link} to="/favorited">Сохранённые</Nav.Link>
                             <Nav.Link as={Link} to="/create">Новый_пост</Nav.Link>
                             <Nav.Link as={Link} to="/profile">Профиль</Nav.Link>
                         </Nav>

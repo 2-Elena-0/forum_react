@@ -9,6 +9,10 @@ import {Users} from "./Components/Users/Users.tsx";
 import {CreatePost} from "./Components/posts/CreatePost/CreatePost.tsx";
 import {SignIn} from "./Components/Account/SignIn.tsx";
 import {SignUp} from "./Components/Account/SignUp.tsx";
+import {User} from "./Components/Profile/User.tsx";
+import {NotFound} from "./Components/NotFound/NotFound.tsx";
+import {LikedPosts} from "./Components/posts/LikedPosts.tsx";
+import {FavoritedPosts} from "./Components/posts/FavoritedPosts.tsx";
 
 function App() {
     return (
@@ -17,11 +21,15 @@ function App() {
             <Routes>
                 <Route path="/" element={<Posts />}/>
                 <Route path="/post" element={<Post />}/>
+                <Route path="/liked" element={<LikedPosts />}/>
+                <Route path="/favorited" element={<FavoritedPosts />}/>
                 <Route path="/profile" element={<Profile />}/>
+                <Route path="/user" element={<User />}/>
                 <Route path="/users" element={<Users />}/>
                 <Route path="/create" element={<CreatePost />}/>
                 <Route path="/sign-in" element={<SignIn />}/>
                 <Route path="/sign-up" element={<SignUp />}/>
+                <Route path="*" element={<NotFound />} />
             </Routes>
         </>
     )

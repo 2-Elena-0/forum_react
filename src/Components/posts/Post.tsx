@@ -1,16 +1,19 @@
 import {Container} from "react-bootstrap";
-import {HeartFill, StarFill} from "react-bootstrap-icons";
 import {useEffect, useState} from "react";
 import {useNavigate, useSearchParams} from "react-router";
 import axios from "axios";
 import {Comments} from "../Comments/Comments.tsx";
 import {MyCarousel} from "../Components/Carousel.tsx";
 import {AddComment} from "../Comments/AddComment.tsx";
+import {ProfileMini} from "../Profile/ProfileMini.tsx";
+import {LikePost} from "../Components/LikePost.tsx";
+import {FavoritePost} from "../Components/FavoritePost.tsx";
 
 export const Post = () => {
     const [searchParams] = useSearchParams();
     const [postName, setPostName] = useState<string>("");
     const [postBody, setPostBody] = useState<string>("");
+    const [postCreator, setPostCreator] = useState<string>("");
     const [likes, setLikes] = useState<number>(0);
     const [favorite, setFavorite] = useState<number>(0);
     const [images, setImages] = useState<string[]>([]);
@@ -26,6 +29,7 @@ export const Post = () => {
                 setLikes(res.data.likes);
                 setFavorite(res.data.favorites);
                 setImages(res.data.images);
+                setPostCreator(res.data.userUId);
             })
         } else {
             navigate("/")
@@ -37,21 +41,21 @@ export const Post = () => {
         <Container>
             {query && (
                 <>
-                    {images.length > 0 && (<MyCarousel images={images} />)}
+                    {images.length > 0 && (<MyCarousel images={images}/>)}
 
                     <h1 className="text-center">{postName}</h1>
                     <div className="text-center">
                         <p>{postBody}</p>
-                        <div>
-                            <HeartFill color="red" size={25}/>
-                            <small className="ms-1 text-muted">{likes}</small>
-                            <StarFill className="ms-3 mb-1" color="orange" size={25}/>
-                            <small className="ms-1 text-muted">{favorite}</small>
+                        <div className="d-flex justify-content-center gap-1">
+                            <LikePost likes={likes} post={query}/>
+                            <FavoritePost favorite={favorite} post={query}/>
                         </div>
                     </div>
 
+                    <ProfileMini uid={postCreator} />
+
                     <h3 className="m-3 text-center">Комментарии</h3>
-                    <AddComment postUid={query} />
+                    <AddComment postUid={query}/>
                     <Comments post={query}/>
                 </>
             )}
