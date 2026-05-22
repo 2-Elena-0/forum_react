@@ -7,6 +7,8 @@ import {MySpinner} from "../Comments/Spinner.tsx";
 import {UserRefactor} from "../Users/Components/UserRefactor.tsx";
 import {Exit} from "./Components/Exit.tsx";
 import {ProfilePart} from "./Components/ProfilePart.tsx";
+import {useDispatch} from "react-redux";
+import {clearFilter} from "../../Redux/FilterSlice.ts";
 
 export const Profile = () => {
     const [name, setName] = useState<string>("");
@@ -16,9 +18,12 @@ export const Profile = () => {
     const [followers, setFollowers] = useState<number>(0);
 
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     useEffect(() => {
         if (localStorage.getItem("token") && localStorage.getItem("uid")) {
+            dispatch(clearFilter());
+
             axios.get(`http://localhost:5152/api/User/${localStorage.getItem("uid")}`, {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem("token")}`

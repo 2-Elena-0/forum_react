@@ -3,12 +3,14 @@ import { configureStore } from '@reduxjs/toolkit'
 import {TopicModalSlice} from "./topicModalSlice.ts";
 import {UpdateSlice} from "./updateSlice.tsx";
 import {LinkSlice} from "./LinkSlice.ts";
+import {FilterSlice} from "./FilterSlice.ts";
 
 export const store = configureStore({
     reducer: {
         show: TopicModalSlice.reducer,
         updateState: UpdateSlice.reducer,
         links: LinkSlice.reducer,
+        filters: FilterSlice.reducer,
     },
 })
 

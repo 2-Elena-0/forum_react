@@ -3,6 +3,7 @@ import {Container} from "react-bootstrap";
 import axios from "axios";
 import {MySpinner} from "../Comments/Spinner.tsx";
 import {PostMap} from "./PostMap.tsx";
+import {useAppSelector} from "../../Redux/store.ts";
 
 export type postType = {
     uid: string;
@@ -17,16 +18,18 @@ export type postType = {
 
 export const UserPost = ({creatorUid = ""}) => {
     const [posts, setPosts] = useState<postType[]>([]);
+    const filters = useAppSelector(state => state.filters.value);
 
     useEffect(() => {
         axios.get(`http://localhost:5152/api/Post/${creatorUid}`).then(res => {
-            setPosts(res.data)
+            const myPosts : postType[] = res.data;
+            setPosts(myPosts.filter(x => x.name.toLowerCase().includes(filters)));
         })
-    }, []);
+    }, [filters]);
 
     return (<Container>
         {posts.length == 0 ? (<MySpinner/>) : (<>
-            <PostMap posts={posts} />
+            <PostMap posts={posts}/>
         </>)}
     </Container>)
 }

@@ -1,6 +1,7 @@
-import {Button, Container, Form, Nav, Navbar, Offcanvas} from "react-bootstrap";
+import {Container, Nav, Navbar, Offcanvas} from "react-bootstrap";
 import "../../NavStile.css"
 import {Link} from "react-router";
+import {FindPost} from "../Components/FindPost.tsx";
 
 const ForumNavbar = () => {
     return (<>
@@ -19,21 +20,7 @@ const ForumNavbar = () => {
                         </Offcanvas.Title>
                     </Offcanvas.Header>
                     <Offcanvas.Body>
-                        <Form.Select className={"d-flex w-responsive"} aria-label="Default select example">
-                            <option>Тип поиска</option>
-                            <option value="1">Название</option>
-                            <option value="2">Пользователь</option>
-                            <option value="3">Тема</option>
-                        </Form.Select>
-                        <Form className="collapse navbar-collapse justify-content-center w-100 d-flex">
-                            <Form.Control
-                                type="search"
-                                placeholder="Search"
-                                className="me-2"
-                                aria-label="Search"
-                            />
-                            <Button variant="outline-primary">Найти</Button>
-                        </Form>
+                        <FindPost/>
                         <Nav className="justify-content-end flex-grow-1 pe-3">
                             <Nav.Link as={Link} to="/users">Пользователи</Nav.Link>
                             <Nav.Link as={Link} to="/liked">Понравившиеся</Nav.Link>
