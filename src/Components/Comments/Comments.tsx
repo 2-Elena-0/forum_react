@@ -8,6 +8,8 @@ import {Link} from "react-router";
 type commentType = {
     "uid": string,
     "userUId": string,
+    "userAvatar": string,
+    "userName": string,
     "postUId": string,
     "body": string,
     "createdAt": string,
@@ -31,8 +33,7 @@ export const Comments = ({post}: { post: string }) => {
                 <Card key={i} border="info"
                       className="mb-3 d-flex flex-row-reverse display-flex align-items-center justify-content-between">
                     <div className="w-100">
-                        <Card.Title>
-                            {comment?.userUId}
+                        <Card.Title>{comment.userName} - {comment?.userUId}
                         </Card.Title>
                         <Card.Body>
                             <Card.Text>
@@ -41,8 +42,7 @@ export const Comments = ({post}: { post: string }) => {
                         </Card.Body>
                     </div>
                     <Card.Body as={Link} to={"/user?uid=" + comment.userUId}>
-                        <MyImage src="./avatar/whos-the-baddest-hsr-character-and-why-is-it-serval-v0-z9rnvb32vj2b1.png"
-                                 height="8.5em"/>
+                        <MyImage src={comment.userAvatar} height="8.5em"/>
                     </Card.Body>
                 </Card>
             ))}
