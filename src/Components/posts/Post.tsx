@@ -52,7 +52,7 @@ export const Post = () => {
 
                     <h3 className="m-3 text-center">Комментарии</h3>
                     <AddComment postUid={query} />
-                    <Comments/>
+                    <Comments post={query}/>
                 </>
             )}
         </Container>)

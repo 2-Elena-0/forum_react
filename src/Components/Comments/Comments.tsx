@@ -15,12 +15,12 @@ type commentType = {
     "wasDeleted": boolean
 }
 
-export const Comments = () => {
+export const Comments = ({post} : {post: string}) => {
     const [comments, setComments] = useState<commentType[]>([]);
     const updateComment = useAppSelector((state => state.show.value));
 
     useEffect(() => {
-        axios.get("http://localhost:5152/api/Comment").then((res) => {
+        axios.get(`http://localhost:5152/api/Comment/api/CommentPost/${post}`).then((res) => {
             setComments(res.data);
         })
     }, [updateComment]);
