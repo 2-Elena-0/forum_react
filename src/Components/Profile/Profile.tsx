@@ -15,7 +15,6 @@ export const Profile = () => {
     const [avatar, setAvatar] = useState<string>("");
     const [description, setDescription] = useState<string>("");
     const [uid, setUid] = useState<string>("");
-    const [followers, setFollowers] = useState<number>(0);
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -32,7 +31,6 @@ export const Profile = () => {
                 setName(res.data.name);
                 setAvatar(res.data.avatarUrl);
                 setDescription(res.data.description);
-                setFollowers(res.data.followers);
                 setUid(res.data.uid);
 
                 axios.get(`http://localhost:5152/api/User/likePost/${res.data.uid}`)
@@ -55,7 +53,7 @@ export const Profile = () => {
     return (<Container>
         <h1 className="text-center">Профиль</h1>
         {name == "" ? (<MySpinner/>) : (<>
-            <ProfilePart avatar={avatar} followers={followers} name={name} uid={uid} description={description}/>
+            <ProfilePart avatar={avatar} name={name} uid={uid} description={description}/>
 
             <UserRefactor name={name} description={description} uid={uid} image={avatar}/>
 
