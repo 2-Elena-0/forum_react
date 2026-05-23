@@ -5,11 +5,12 @@ import {useEffect, useState} from "react";
 import {CreateTopic} from "./CreateTopic.tsx";
 import axios from "axios";
 import type {topicType} from "../../../types.ts";
-import {useSearchParams} from "react-router";
+import {useNavigate, useSearchParams} from "react-router";
 
 export const Themes = () => {
     const [topics, setTopics] = useState<topicType[]>([])
     const [newTopic, setNewTopic] = useState<string>("");
+    const navigate = useNavigate();
 
     const [searchParams] = useSearchParams();
     const query = searchParams.get("post");
@@ -24,6 +25,7 @@ export const Themes = () => {
     const addTopic = () => {
         axios.post(`http://localhost:5152/api/Topic/addTopic/${newTopic}/ToPost/${query}`).then(() => {
             dispatch(handleClose());
+            navigate(0);
         })
     }
 
