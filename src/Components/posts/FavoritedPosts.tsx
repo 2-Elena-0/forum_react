@@ -1,5 +1,5 @@
 import {useEffect, useState} from "react";
-import type {postType} from "../Components/UserPost.tsx";
+import type {postType} from "../../types.ts";
 import axios from "axios";
 import {Container} from "react-bootstrap";
 import {PostMap} from "../Components/PostMap.tsx";

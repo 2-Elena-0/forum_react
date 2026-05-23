@@ -35,7 +35,7 @@ export const UserRefactor = ({name, description, uid, image}: { name: string, de
 
     return (
         <>
-            <Button variant="primary" className="me-2" onClick={handleShow}>
+            <Button variant="primary" className="me-2 ms-3" onClick={handleShow}>
                 Настройки
             </Button>
 

@@ -4,18 +4,9 @@ import axios from "axios";
 import {MyImage} from "./Image.tsx";
 import {useAppSelector} from "../../Redux/store.ts";
 import {Link} from "react-router";
+import type {commentType} from "../../types.ts";
 
-type commentType = {
-    "uid": string,
-    "userUId": string,
-    "userAvatar": string,
-    "userName": string,
-    "postUId": string,
-    "body": string,
-    "createdAt": string,
-    "likes": number,
-    "wasDeleted": boolean
-}
+
 
 export const Comments = ({post}: { post: string }) => {
     const [comments, setComments] = useState<commentType[]>([]);

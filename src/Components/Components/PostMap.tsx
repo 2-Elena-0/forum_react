@@ -1,4 +1,4 @@
-import type {postType} from "./UserPost.tsx";
+import type {postType} from "../../types.ts";
 import {HeartFill, StarFill} from "react-bootstrap-icons";
 import {Card} from "react-bootstrap";
 import {Link} from "react-router";
