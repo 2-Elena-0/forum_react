@@ -37,6 +37,8 @@ export const CreatePost = () => {
                 dispatch(Clear());
                 navigate(`/post?post=${res.data.uid}`);
             })
+        } else {
+            navigate("/sign-in");
         }
     }
 

@@ -27,7 +27,7 @@ export const AddComment = ({postUid} : {postUid: string}) => {
                 navigate(0)
             })
         } else {
-            navigate("/login");
+            navigate("/sign-in");
         }
     }
 

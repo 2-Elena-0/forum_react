@@ -1,7 +1,7 @@
 import {Container, Nav, Navbar, Offcanvas} from "react-bootstrap";
 import "../../NavStile.css"
 import {Link} from "react-router";
-import {FindPost} from "../Components/FindPost.tsx";
+import {FindByName} from "../Components/FindByName.tsx";
 
 const ForumNavbar = () => {
     return (<>
@@ -20,12 +20,12 @@ const ForumNavbar = () => {
                         </Offcanvas.Title>
                     </Offcanvas.Header>
                     <Offcanvas.Body>
-                        <FindPost/>
+                        <FindByName/>
                         <Nav className="justify-content-end flex-grow-1 pe-3">
                             <Nav.Link as={Link} to="/users">Пользователи</Nav.Link>
-                            <Nav.Link as={Link} to="/liked">Понравившиеся</Nav.Link>
-                            <Nav.Link as={Link} to="/favorited">Сохранённые</Nav.Link>
-                            <Nav.Link as={Link} to="/create">Новый_пост</Nav.Link>
+                            <Nav.Link as={Link} to={localStorage.getItem('uid') ? "/liked" : "/sign-in"}>Понравившиеся</Nav.Link>
+                            <Nav.Link as={Link} to={localStorage.getItem('uid') ? "/favorited" : "/sign-in"}>Сохранённые</Nav.Link>
+                            <Nav.Link as={Link} to={localStorage.getItem('uid') ? "/create" : "/sign-in"}>Создать</Nav.Link>
                             <Nav.Link as={Link} to="/profile">Профиль</Nav.Link>
                         </Nav>
                     </Offcanvas.Body>
