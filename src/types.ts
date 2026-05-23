@@ -32,3 +32,9 @@ export type userType = {
     role: string,
     roleGet: string
 }
+
+export type topicType = {
+    uId: string,
+    title: string,
+    description: string
+}
