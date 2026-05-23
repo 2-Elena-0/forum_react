@@ -29,7 +29,6 @@ export const SignUp = () => {
             name: name,
             email: email,
             password: password,
-            role: "standart",
         }).then((response) => {
             localStorage.setItem("token", response.data.token);
             localStorage.setItem("uid", response.data.uid);
