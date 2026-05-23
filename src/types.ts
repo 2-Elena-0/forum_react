@@ -29,8 +29,6 @@ export type userType = {
     avatarUrl: string,
     createdAt: string,
     followersCount: number,
-    role: string,
-    roleGet: string
 }
 
 export type topicType = {
