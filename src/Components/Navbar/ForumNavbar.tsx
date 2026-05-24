@@ -4,6 +4,8 @@ import {Link} from "react-router";
 import {FindByName} from "../Components/FindByName.tsx";
 
 const ForumNavbar = () => {
+    const user = localStorage.getItem('uid');
+
     return (<>
         <Navbar expand="lg" className="bg-body-tertiary mb-3">
             <Container fluid>
@@ -23,9 +25,10 @@ const ForumNavbar = () => {
                         <FindByName/>
                         <Nav className="justify-content-end flex-grow-1 pe-3">
                             <Nav.Link as={Link} to="/users">Пользователи</Nav.Link>
-                            <Nav.Link as={Link} to={localStorage.getItem('uid') ? "/liked" : "/sign-in"}>Понравившиеся</Nav.Link>
-                            <Nav.Link as={Link} to={localStorage.getItem('uid') ? "/favorited" : "/sign-in"}>Сохранённые</Nav.Link>
-                            <Nav.Link as={Link} to={localStorage.getItem('uid') ? "/create" : "/sign-in"}>Создать</Nav.Link>
+                            <Nav.Link as={Link} to={user ? "/interesting" : "/sign-in"}>Интересные</Nav.Link>
+                            <Nav.Link as={Link} to={user ? "/liked" : "/sign-in"}>Понравившиеся</Nav.Link>
+                            <Nav.Link as={Link} to={user ? "/favorited" : "/sign-in"}>Сохранённые</Nav.Link>
+                            <Nav.Link as={Link} to={user ? "/create" : "/sign-in"}>Создать</Nav.Link>
                             <Nav.Link as={Link} to="/profile">Профиль</Nav.Link>
                         </Nav>
                     </Offcanvas.Body>

@@ -14,6 +14,7 @@ import {NotFound} from "./Components/NotFound/NotFound.tsx";
 import {LikedPosts} from "./Components/posts/LikedPosts.tsx";
 import {FavoritedPosts} from "./Components/posts/FavoritedPosts.tsx";
 import {UpdatePost} from "./Components/posts/CreatePost/UpdatePost.tsx";
+import {Interesting} from "./Components/posts/Interesting.tsx";
 
 function App() {
     return (
@@ -24,6 +25,7 @@ function App() {
                 <Route path="/post" element={<Post />}/>
                 <Route path="/liked" element={<LikedPosts />}/>
                 <Route path="/favorited" element={<FavoritedPosts />}/>
+                <Route path="/interesting" element={<Interesting />}/>
                 <Route path="/profile" element={<Profile />}/>
                 <Route path="/user" element={<User />}/>
                 <Route path="/users" element={<Users />}/>

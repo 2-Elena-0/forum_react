@@ -9,6 +9,7 @@ import {Exit} from "./Components/Exit.tsx";
 import {ProfilePart} from "./Components/ProfilePart.tsx";
 import {useDispatch} from "react-redux";
 import {clearFilter} from "../../Redux/FilterSlice.ts";
+import {TopicForUser} from "../Components/TopicForUser.tsx";
 
 export const Profile = () => {
     const [name, setName] = useState<string>("");
@@ -56,6 +57,8 @@ export const Profile = () => {
             <ProfilePart avatar={avatar} name={name} uid={uid} description={description}/>
 
             <UserRefactor name={name} description={description} uid={uid} image={avatar}/>
+
+            <TopicForUser />
 
             <Exit/>
 
