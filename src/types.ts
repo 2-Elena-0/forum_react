@@ -6,8 +6,6 @@ export type commentType = {
     "postUId": string,
     "body": string,
     "createdAt": string,
-    "likes": number,
-    "wasDeleted": boolean
 }
 
 export type postType = {
@@ -17,7 +15,6 @@ export type postType = {
     likes: number;
     favorites: number;
     createdAt: string;
-    userDelete: boolean;
     userUId: string;
 }
 
